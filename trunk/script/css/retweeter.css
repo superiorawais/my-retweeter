@@ -1,0 +1,84 @@
+/*** PROFILE BOX ***/
+#mini-profile{
+    width: 400px; 
+    height: auto; 
+    display: block;
+    text-align: left;
+}
+.profile-modal-header {
+    height: 48px;
+    padding: 15px 15px 5px;
+    color: #333333;
+}
+.profile-modal-header .avatar {
+    float: left;
+    border-radius: 5px 5px 5px 5px;
+    height: 48px;
+    width: 48px;
+}
+.profile-modal-header-inner {
+    margin-left: 58px;
+    margin-right: 30px;
+}
+.profile-modal-header .fullname {
+    font-size: 24px;
+    line-height: 28px;
+    margin-top: -2px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+.profile-modal-header .username {
+    color: #777777;
+    font-size: 16px;
+    line-height: 20px;
+    direction: ltr;
+    unicode-bidi: embed;
+}
+.profile-modal-extended {
+    padding: 0 15px 10px;
+}
+    
+.bio {
+    color: #777777;
+    font: italic 13px/18px Georgia,Times New Roman,serif;
+    word-wrap: break-word;
+    margin-bottom: 0;
+}
+.follow-bar{
+    margin-left: 13px;
+}
+.follow-btn:hover {
+    background-color: #C43C35;
+    background-image: -moz-linear-gradient(#EE5F5B, #C43C35);
+    background-repeat: repeat-x;
+    border-color: #A93730 #A93730 #952F2A;
+    text-decoration: none;
+}
+.follow-btn {
+    text-decoration: none;
+    background-color: #019AD2;
+    background-image: -moz-linear-gradient(#33BCEF, #019AD2);
+    background-repeat: repeat-x;
+    border-color: #057ED0;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 4px 4px 4px 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    overflow: visible;
+    position: relative;
+    
+}
+.action-text {
+    min-width: 70px;
+    padding: 5px 7px;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.action-text:hover{
+    color: #FFFFFF;
+}
