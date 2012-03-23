@@ -69,7 +69,7 @@
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
                                     <a id="delete-retweeter" onclick="return confirm('Are you sure want to Delete this account?');" title="Delete Account" href="<?php echo base_url();?>retweeter/delete/<?php echo $account->id;?>"><img alt="Delete Account" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
-                                    <a id="manage-retweeter" title="Manage Source Account" href="#"><img alt="Manage Source Account" src="<?php echo base_url(); ?>script/images/hammer_screwdriver.png" /></a>
+                                    <a id="manage-retweeter" title="Manage Source Account" href="<?php echo base_url();?>retweeter/hashtag/<?php echo $account->id;?>"><img alt="Manage Source Account" src="<?php echo base_url(); ?>script/images/hammer_screwdriver.png" /></a>
                                 </td>
                             </tr>
                             <?php $i++;?>
