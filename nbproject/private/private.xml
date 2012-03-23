@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/xampp/htdocs/auto-rt/application/views/login.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/controllers/main.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/models/main_model.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/views/retweeter/list.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/script/css/default.css</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/views/retweeter/add.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/controllers/retweeter.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/script/css/retweeter.css</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/models/cron.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/views/source/hashtag.php</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/script/js/retweeter.js</file>
+        <file>file:/C:/xampp/htdocs/auto-rt/application/libraries/tweet.php</file>
+    </open-files>
 </project-private>

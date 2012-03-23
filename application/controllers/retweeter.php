@@ -95,6 +95,47 @@ class Retweeter extends CI_Controller {
         redirect('retweeter');
     }
     
+    // SOURCE HASH TAG
+    public function hashtag($user_id){
+        $this->session->set_userdata('retweeter_id',$user_id);
+        $temp['css'] = array('retweeter');
+        $data['hashtag'] = $this->main_model->get_hashtag_by_id($user_id);
+        $data['retweeter'] = $this->main_model->get_retweeter_by_id($user_id);
+        $data['user'] = $this->tweet->call('get', 'users/lookup',array('screen_name'=>$data['retweeter']->username));
+        $this->load->view('header',$temp);
+        $this->load->view('source/hashtag', $data);
+        $this->load->view('footer');
+    }
+    
+    public function hashtag_submit($user_id){
+        $input['hashtag'] = $this->input->post('hashtag');
+        $input['retweeter_id'] = $user_id;
+        $this->main_model->insert_hashtag($input);
+        redirect('retweeter/hashtag/'.$user_id);
+    }
+    public function disable_ht($ht_id){
+        $this->main_model->set_ht_status($ht_id,0);
+        $this->session->set_flashdata('sn_add','success');
+        $this->session->set_flashdata('sn_add_content','Hashtag has been disabled');
+        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+    }
+    
+    public function enable_ht($ht_id){
+        $this->main_model->set_ht_status($ht_id,1);
+        $this->session->set_flashdata('sn_add','success');
+        $this->session->set_flashdata('sn_add_content','Hashtag has been enabled');
+        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+    }
+    
+    public function delete_ht($ht_id){
+        $this->main_model->delete_ht($ht_id);
+        $this->session->set_flashdata('sn_add','success');
+        $this->session->set_flashdata('sn_add_content','Hashtag has been deleted');
+        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+    }
+    
+    
+    
     function auth() {
         $tokens = $this->tweet->get_tokens();
         var_dump($tokens);
@@ -128,10 +169,13 @@ class Retweeter extends CI_Controller {
     
     function twitter(){
         $this->tweet->enable_debug(TRUE);
-        $query = urlencode('#fininsight');
-        $tweet = $this->tweet->search(array('q'=>$query,'since_id'=>'182701268991614976'));
+        $query = urlencode('from:fahmimumtaz #fininsight');
+        $tweet = $this->tweet->search(array('q'=>$query,'include_entities'=>'true'));
+        //$tweet = $this->tweet->call('get', 'statuses/user_timeline',array('include_entities'=>'true','include_rts'=>'true','screen_name'=>'fahmimumtaz','count'=>20));
         foreach($tweet->results as $t){
-            echo $t->from_user." > ".$t->id_str." = ".$t->text."<br/>";
+            var_dump($t->text);
+            echo '='.$t->from_user;
+            echo '<br/>';
         }
     }
 
