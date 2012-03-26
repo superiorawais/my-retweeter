@@ -33,6 +33,7 @@ class Main extends CI_Controller {
         $input['password'] = $this->input->post('password');
         if($this->main_model->check_login($input)){
             $this->session->set_userdata('logged',TRUE);
+            redirect('retweeter');
         }else{
             redirect('main/login');
         }
