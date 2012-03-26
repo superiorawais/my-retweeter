@@ -112,7 +112,7 @@ class tweetConnection {
         $this->_initConnection($url, $params);
         curl_setopt($this->_ch, CURLOPT_POST, 1);
         curl_setopt($this->_ch, CURLOPT_POSTFIELDS, $post);
-
+        
         $response = $this->_addCurl($url, $params);
 
         return $response;

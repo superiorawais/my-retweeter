@@ -20,7 +20,19 @@ $(document).ready(function(){
         });
     });
     $(".placeholding-input span").click(function(){
-        $(".placeholding-input input").focus();
+        $(this).prev('input').focus();
+    });
+    
+    /* SOURCE TIME */
+    $("#add-time-button").click(function(){
+        $("#add-time-trigger").fadeOut(function(){
+           $("#add-time").fadeIn(); 
+        });
+    });
+    $("#add-time-cancel").click(function(){
+        $("#add-time").fadeOut(function(){
+           $("#add-time-trigger").fadeIn(); 
+        });
     });
 });
 

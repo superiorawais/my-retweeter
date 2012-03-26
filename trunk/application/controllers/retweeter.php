@@ -5,8 +5,6 @@ if (!defined('BASEPATH'))
 
 class Retweeter extends CI_Controller {
 
-    private $connection;
-
     public function __construct() {
         parent::__construct();
         $this->load->library('session');
@@ -99,8 +97,12 @@ class Retweeter extends CI_Controller {
     public function hashtag($user_id){
         $this->session->set_userdata('retweeter_id',$user_id);
         $temp['css'] = array('retweeter');
-        $data['hashtag'] = $this->main_model->get_hashtag_by_id($user_id);
+        $data['hashtag'] = $this->main_model->get_hashtag_by_rt($user_id);
+        $data['st'] = $this->main_model->get_st_by_rt($user_id);
         $data['retweeter'] = $this->main_model->get_retweeter_by_id($user_id);
+        //get twitter account info
+        $tokens = array('oauth_token' => $data['retweeter']->access, 'oauth_token_secret' => $data['retweeter']->access_secret);
+        $this->tweet->set_tokens($tokens);
         $data['user'] = $this->tweet->call('get', 'users/lookup',array('screen_name'=>$data['retweeter']->username));
         $this->load->view('header',$temp);
         $this->load->view('source/hashtag', $data);
@@ -108,29 +110,94 @@ class Retweeter extends CI_Controller {
     }
     
     public function hashtag_submit($user_id){
-        $input['hashtag'] = $this->input->post('hashtag');
-        $input['retweeter_id'] = $user_id;
-        $this->main_model->insert_hashtag($input);
+        $username = $this->input->post('username');
+        $username = str_replace("@", "", $username);
+        if($this->main_model->check_hashtag_username($username)){
+            $this->session->set_flashdata('sn_add','error');
+            $this->session->set_flashdata('sn_add_content','Twitter account is already exists in database');
+        }else{
+            $input['username'] = $username;
+            $input['hashtag'] = $this->input->post('hashtag');
+            $input['retweeter_id'] = $user_id;
+            $this->main_model->insert_hashtag($input);
+            $this->session->set_flashdata('sn_add','success');
+            $this->session->set_flashdata('sn_add_content','Twitter account has been added');
+        }
         redirect('retweeter/hashtag/'.$user_id);
     }
+    public function time_submit($user_id){
+        $username = $this->input->post('username');
+        $username = str_replace("@", "", $username);
+        $input['username'] = $username;
+        $input['retweeter_id'] = $user_id;
+        $input['day'] = $this->input->post('day');
+        if($input['day']<0){
+            $this->session->set_flashdata('sn_add', 'error');
+            $this->session->set_flashdata('sn_add_content', 'Please select day');
+            redirect('retweeter/hashtag/'.$user_id);
+        }
+        $input['start_time'] = $this->input->post('start_time');
+        if($input['start_time']<0){
+            $this->session->set_flashdata('sn_add', 'error');
+            $this->session->set_flashdata('sn_add_content', 'Please select start time');
+            redirect('retweeter/hashtag/'.$user_id);
+        }
+        $input['end_time'] = $this->input->post('end_time');
+        if($input['end_time']<0){
+            $this->session->set_flashdata('sn_add', 'error');
+            $this->session->set_flashdata('sn_add_content', 'Please select end time');
+            redirect('retweeter/hashtag/'.$user_id);
+        }
+        if($input['end_time']<$input['start_time']){
+            $this->session->set_flashdata('sn_add', 'error');
+            $this->session->set_flashdata('sn_add_content', 'End time less than start time');
+            redirect('retweeter/hashtag/'.$user_id);
+        }
+        $this->main_model->insert_time($input);
+        $this->session->set_flashdata('sn_add', 'success');
+        $this->session->set_flashdata('sn_add_content', 'Twitter account has been added');
+        redirect('retweeter/hashtag/'.$user_id);
+    }
+    
     public function disable_ht($ht_id){
         $this->main_model->set_ht_status($ht_id,0);
         $this->session->set_flashdata('sn_add','success');
-        $this->session->set_flashdata('sn_add_content','Hashtag has been disabled');
+        $this->session->set_flashdata('sn_add_content','Twitter account has been disabled');
         redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
     }
     
     public function enable_ht($ht_id){
         $this->main_model->set_ht_status($ht_id,1);
         $this->session->set_flashdata('sn_add','success');
-        $this->session->set_flashdata('sn_add_content','Hashtag has been enabled');
+        $this->session->set_flashdata('sn_add_content','Twitter account has been enabled');
         redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
     }
     
     public function delete_ht($ht_id){
         $this->main_model->delete_ht($ht_id);
         $this->session->set_flashdata('sn_add','success');
-        $this->session->set_flashdata('sn_add_content','Hashtag has been deleted');
+        $this->session->set_flashdata('sn_add_content','Twitter account been deleted');
+        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+    }
+    
+    public function disable_st($st_id){
+        $this->main_model->set_st_status($st_id,0);
+        $this->session->set_flashdata('sn_add','success');
+        $this->session->set_flashdata('sn_add_content','Twitter account has been disabled');
+        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+    }
+    
+    public function enable_st($st_id){
+        $this->main_model->set_st_status($st_id,1);
+        $this->session->set_flashdata('sn_add','success');
+        $this->session->set_flashdata('sn_add_content','Twitter account has been enabled');
+        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+    }
+    
+    public function delete_st($st_id){
+        $this->main_model->delete_st($st_id);
+        $this->session->set_flashdata('sn_add','success');
+        $this->session->set_flashdata('sn_add_content','Twitter account been deleted');
         redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
     }
     
@@ -165,18 +232,6 @@ class Retweeter extends CI_Controller {
         $timeline = $this->tweet->call('get', 'statuses/home_timeline');
 
         //var_dump($timeline);
-    }
-    
-    function twitter(){
-        $this->tweet->enable_debug(TRUE);
-        $query = urlencode('from:fahmimumtaz #fininsight');
-        $tweet = $this->tweet->search(array('q'=>$query,'include_entities'=>'true'));
-        //$tweet = $this->tweet->call('get', 'statuses/user_timeline',array('include_entities'=>'true','include_rts'=>'true','screen_name'=>'fahmimumtaz','count'=>20));
-        foreach($tweet->results as $t){
-            var_dump($t->text);
-            echo '='.$t->from_user;
-            echo '<br/>';
-        }
     }
 
 }

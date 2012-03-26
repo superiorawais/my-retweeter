@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 23, 2012 at 08:10 AM
+-- Generation Time: Mar 26, 2012 at 07:17 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -33,14 +33,24 @@ CREATE TABLE IF NOT EXISTS `retweeter` (
   `access` varchar(255) NOT NULL,
   `access_secret` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `retweeter`
+-- Table structure for table `retweeter_tweet`
 --
 
-INSERT INTO `retweeter` (`id`, `username`, `status`, `access`, `access_secret`) VALUES
-(4, 'yudir', 1, '49005834-5EF0g851EBUA22Ybhb49uO0hOCddXkb0QW1RU10IC', 'TkjaehCf5Pwnc2JYMZHCSaZYKfcpqnIM3EzscMbb24');
+DROP TABLE IF EXISTS `retweeter_tweet`;
+CREATE TABLE IF NOT EXISTS `retweeter_tweet` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `retweeter_id` int(11) NOT NULL,
+  `tweet_id` varchar(255) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tweet_id` (`tweet_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -57,11 +67,23 @@ CREATE TABLE IF NOT EXISTS `source_hashtag` (
   `last_tweet_id` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `source_hashtag`
+-- Table structure for table `source_time`
 --
 
-INSERT INTO `source_hashtag` (`id`, `retweeter_id`, `username`, `hashtag`, `last_tweet_id`, `status`) VALUES
-(2, 4, 'dindaf', '#tesretweeter,#akuneksperimen', '1', 1);
+DROP TABLE IF EXISTS `source_time`;
+CREATE TABLE IF NOT EXISTS `source_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `retweeter_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `day` smallint(6) NOT NULL,
+  `start_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  `last_tweet_id` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
