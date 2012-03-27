@@ -106,11 +106,12 @@
     display: none;
 }
 .placeholding-input{
-    float: left;
+    display: inline-block;
 }
 .placeholding-input span{
     position: absolute;
     left:0;
+    top:0;
     line-height: 28px;
     font-size: 14px;
     vertical-align: middle;
@@ -119,19 +120,43 @@
     z-index: 1;
 }
 .placeholding-input input{
+    background: none;
+    width:140px;
     z-index: 5;
-    margin-right: 5px;
     border-radius:3px 3px 3px 3px;
     outline: medium none;
     padding: 4px;
     border: 1px solid #CCCCCC;
     box-shadow: 0 1px 0 #EEEEEE inset, 0 1px 0 #FFFFFF;
     height: 18px;
-    left: 0;
+}
+.placeholding-input input.submit{
+    width: 60px;
+    height: 28px !important;
+    background-color: #019AD2;
+    background-image: -moz-linear-gradient(#33BCEF, #019AD2);
+    background-repeat: repeat-x;
+    border-color: #057ED0;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 4px 4px 4px 4px;
+    padding: 5px 7px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+}
+.placeholding-input input.submit:hover{
+    background-color: #C43C35;
+    background-image: -moz-linear-gradient(#EE5F5B, #C43C35);
+    background-repeat: repeat-x;
+    border-color: #A93730 #A93730 #952F2A;
+    text-decoration: none;
+    color:#FFFFFF;
+    cursor:pointer;
 }
 .placeholding-input select{
     line-height: 28px;
-    margin-right: 5px;
     padding: 4px;
     border-radius:3px 3px 3px 3px;
     border: 1px solid #CCCCCC;

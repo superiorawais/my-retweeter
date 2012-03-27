@@ -3,6 +3,7 @@
     <div class="content-box"><!-- Start Content Box -->
         <div class="content-box-header">
             <h3>Retweeter Account List</h3>
+            <h5><a href="<?php echo base_url();?>main/logout">logout</a></h5>
             <div class="clear"></div>
         </div> <!-- End .content-box-header -->
         <div class="content-box-content">
@@ -36,6 +37,7 @@
                                         </div>
                                     </a>
                                 </div>
+                                <!--
                                 <div class="pagination">
                                     <a title="First Page" href="#">« First</a><a title="Previous Page" href="#">« Previous</a>
                                     <a title="1" class="number" href="#">1</a>

@@ -33,7 +33,6 @@
             <div class="status-wrap">
             </div>
             <div class="submit-wrap">
-                <a class="forget-pass" href="<?php echo base_url(); ?>#">forgot your password?</a>
                 <input class="submit-button" type="image" src="<?php echo base_url(); ?>script/images/login-button.png" />
             </div>
             </form>
