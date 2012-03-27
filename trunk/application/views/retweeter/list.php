@@ -24,7 +24,8 @@
                             <th class="th-no">No</th>
                             <th>Account</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th style="text-align:center">Manage Source</th>
+                            <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -67,11 +68,13 @@
                                     </a>
                                     <?php endif;?>
                                 </td>
-                                <td>
+                                <td style="text-align:center">
+                                    <a id="manage-retweeter" title="Manage Source Account" href="<?php echo base_url();?>retweeter/hashtag/<?php echo $account->id;?>"><img alt="Manage Source Account" src="<?php echo base_url(); ?>script/images/hammer_screwdriver.png" /></a>
+                                </td>
+                                <td style="text-align:center">
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
-                                    <a id="delete-retweeter" onclick="return confirm('Are you sure want to Delete this account?');" title="Delete Account" href="<?php echo base_url();?>retweeter/delete/<?php echo $account->id;?>"><img alt="Delete Account" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
-                                    <a id="manage-retweeter" title="Manage Source Account" href="<?php echo base_url();?>retweeter/hashtag/<?php echo $account->id;?>"><img alt="Manage Source Account" src="<?php echo base_url(); ?>script/images/hammer_screwdriver.png" /></a>
+                                    <a id="delete-retweeter" onclick="return confirm('Are you sure want to Delete this account?');" title="Delete Account" href="<?php echo base_url();?>retweeter/delete/<?php echo $account->id;?>"><img alt="Delete Account" src="<?php echo base_url(); ?>script/images/cross.png" /></a>
                                 </td>
                             </tr>
                             <?php $i++;?>
