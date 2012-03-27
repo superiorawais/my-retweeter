@@ -156,7 +156,8 @@
     cursor:pointer;
 }
 .placeholding-input select{
-    line-height: 28px;
+    height:28px;
+    line-height: 22px;
     padding: 4px;
     border-radius:3px 3px 3px 3px;
     border: 1px solid #CCCCCC;

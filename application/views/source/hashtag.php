@@ -45,7 +45,7 @@
                             <th>Account</th>
                             <th>Hashtag</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -114,7 +114,7 @@
                                         </a>
                                     <?php endif; ?>
                                 </td>
-                                <td>
+                                <td style="text-align:center">
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
                                     <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this hashtag?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_ht/<?php echo $retweeter_id; ?>/<?php echo $h->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
@@ -134,7 +134,7 @@
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -233,7 +233,7 @@
                                         </a>
                                     <?php endif; ?>
                                 </td>
-                                <td>
+                                <td style="text-align:center">
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
                                     <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this item?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_st/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
