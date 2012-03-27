@@ -16,11 +16,9 @@ class Cron extends CI_Controller {
     
     public function index(){
         //redirect('main');
-        date_default_timezone_set("Asia/Jakarta");
-        $this->load->model('tweet_model');
-        $tweet = $this->tweet_model->get_user_timeline('tes1_myrt');
-        foreach($tweet as $t){
-            echo $t->text." =>".date("Y-m-d G:i:s",strtotime($t->created_at))."->".$t->created_at.'<br/>';
+        $tweet = $this->tweet_model->get_tweet_by_username('detikcom',1,50);
+        foreach($tweet->results as $t){
+            echo $t->text." =>".date("Y-m-d G:i:s",strtotime($t->created_at))."->".$t->id_str.'<br/>';
         }
     }
     

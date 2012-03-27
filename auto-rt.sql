@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 26, 2012 at 07:17 AM
+-- Generation Time: Mar 27, 2012 at 06:22 AM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `retweeter_tweet` (
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tweet_id` (`tweet_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,4 +86,19 @@ CREATE TABLE IF NOT EXISTS `source_time` (
   `last_tweet_id` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tweet_error`
+--
+
+DROP TABLE IF EXISTS `tweet_error`;
+CREATE TABLE IF NOT EXISTS `tweet_error` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `retweeter_id` int(11) NOT NULL,
+  `tweet_id` varchar(255) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

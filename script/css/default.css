@@ -165,6 +165,18 @@ table,tr,td{
     margin: 0;
     font-size: 17px;
 }
+.content-box-header h5 {
+    float: right;
+    padding: 12px 15px 10px;
+    color: #222222;
+    font-family: Helvetica,Arial,sans-serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 14px;
+}
+.content-box-header h5 a:hover{
+    text-decoration: none;
+}
 .content-box-content {
     border-top: 1px solid #CCCCCC;
     font-size: 13px;

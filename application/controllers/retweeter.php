@@ -98,6 +98,7 @@ class Retweeter extends CI_Controller {
         $this->session->set_userdata('retweeter_id',$user_id);
         $temp['css'] = array('retweeter');
         $data['hashtag'] = $this->main_model->get_hashtag_by_rt($user_id);
+        $data['retweeter_id'] = $user_id;
         $data['st'] = $this->main_model->get_st_by_rt($user_id);
         $data['retweeter'] = $this->main_model->get_retweeter_by_id($user_id);
         //get twitter account info
@@ -159,46 +160,46 @@ class Retweeter extends CI_Controller {
         redirect('retweeter/hashtag/'.$user_id);
     }
     
-    public function disable_ht($ht_id){
+    public function disable_ht($retweeter_id,$ht_id){
         $this->main_model->set_ht_status($ht_id,0);
         $this->session->set_flashdata('sn_add','success');
         $this->session->set_flashdata('sn_add_content','Twitter account has been disabled');
-        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+        redirect('retweeter/hashtag/'.$retweeter_id);
     }
     
-    public function enable_ht($ht_id){
+    public function enable_ht($retweeter_id,$ht_id){
         $this->main_model->set_ht_status($ht_id,1);
         $this->session->set_flashdata('sn_add','success');
         $this->session->set_flashdata('sn_add_content','Twitter account has been enabled');
-        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+        redirect('retweeter/hashtag/'.$retweeter_id);
     }
     
-    public function delete_ht($ht_id){
+    public function delete_ht($retweeter_id,$ht_id){
         $this->main_model->delete_ht($ht_id);
         $this->session->set_flashdata('sn_add','success');
         $this->session->set_flashdata('sn_add_content','Twitter account been deleted');
-        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+        redirect('retweeter/hashtag/'.$retweeter_id);
     }
     
-    public function disable_st($st_id){
+    public function disable_st($retweeter_id,$st_id){
         $this->main_model->set_st_status($st_id,0);
         $this->session->set_flashdata('sn_add','success');
         $this->session->set_flashdata('sn_add_content','Twitter account has been disabled');
-        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+        redirect('retweeter/hashtag/'.$retweeter_id);
     }
     
-    public function enable_st($st_id){
+    public function enable_st($retweeter_id,$st_id){
         $this->main_model->set_st_status($st_id,1);
         $this->session->set_flashdata('sn_add','success');
         $this->session->set_flashdata('sn_add_content','Twitter account has been enabled');
-        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+        redirect('retweeter/hashtag/'.$retweeter_id);
     }
     
-    public function delete_st($st_id){
+    public function delete_st($retweeter_id,$st_id){
         $this->main_model->delete_st($st_id);
         $this->session->set_flashdata('sn_add','success');
         $this->session->set_flashdata('sn_add_content','Twitter account been deleted');
-        redirect('retweeter/hashtag/'.$this->session->userdata('retweeter_id'));
+        redirect('retweeter/hashtag/'.$retweeter_id);
     }
     
     

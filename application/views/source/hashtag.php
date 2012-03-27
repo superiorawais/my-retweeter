@@ -3,6 +3,7 @@
     <div class="content-box"><!-- Start Content Box -->
         <div class="content-box-header">
             <h3><?php echo $retweeter->username; ?> Source List</h3>
+            <h5><a href="<?php echo base_url();?>main/logout">logout</a></h5>
             <div class="clear"></div>
         </div> <!-- End .content-box-header -->
         <div class="content-box-content">
@@ -72,11 +73,9 @@
                                             <input type="text" maxlength="255" name="hashtag" autocomplete="off" class="text-input" oninput="input_change(this)"/>
                                             <span class="placeholder">#hashtag,#hashtag</span>
                                         </div>
-                                        <a class="follow-btn" href="#">
-                                            <div class="action-text" >
-                                                <input class="submit" type="submit" value="Submit"/>
-                                            </div>
-                                        </a>
+                                        <div class="placeholding-input">
+                                            <input class="submit" type="submit" value="Submit"/>
+                                        </div>
                                         <a class="follow-btn" href="#">
                                             <div class="action-text" id="add-hashtag-cancel">
                                                 Cancel
@@ -84,6 +83,7 @@
                                         </a>
                                     </form>
                                 </div>
+                                <!--
                                 <div class="pagination">
                                     <a title="First Page" href="#">« First</a><a title="Previous Page" href="#">« Previous</a>
                                     <a title="1" class="number" href="#">1</a>
@@ -105,11 +105,11 @@
                                 <td><?php echo $h->hashtag; ?></td>
                                 <td>
                                     <?php if ($h->status == 1): ?>
-                                        <a title="title" href="<?php echo base_url(); ?>retweeter/disable_ht/<?php echo $h->id; ?>" class="active-account">
+                                        <a title="title" href="<?php echo base_url(); ?>retweeter/disable_ht/<?php echo $retweeter_id; ?>/<?php echo $h->id; ?>" class="active-account">
                                             Enabled
                                         </a>
                                     <?php else: ?>
-                                        <a title="title" href="<?php echo base_url(); ?>retweeter/enable_ht/<?php echo $h->id; ?>" class="inactive-account">
+                                        <a title="title" href="<?php echo base_url(); ?>retweeter/enable_ht/<?php echo $retweeter_id; ?>/<?php echo $h->id; ?>" class="inactive-account">
                                             Disabled
                                         </a>
                                     <?php endif; ?>
@@ -117,7 +117,7 @@
                                 <td>
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
-                                    <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this hashtag?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_ht/<?php echo $h->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
+                                    <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this hashtag?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_ht/<?php echo $retweeter_id; ?>/<?php echo $h->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
                                 </td>
                             </tr>
                             <?php $i++; ?>
@@ -181,15 +181,14 @@
                                         <div class="placeholding-input">
                                             <select name="end_time">
                                                 <option class="dummy" value="-1">-- END TIME --</option>
-                                                <?php for($i=0;$i<2400;$i+=100):?>
+                                                <?php for($i=100;$i<=2400;$i+=100):?>
                                                 <option value="<?php echo $i;?>"><?php echo sprintf("%02d",($i/100)).":".sprintf("%02d",($i%100));?></option>
                                                 <?php endfor;?>
                                             </select>
                                         </div>
-                                        <a class="follow-btn" href="#">
-                                            <div class="action-text" >
-                                                <input class="submit" type="submit" value="Submit"/>
-                                            </div>
+                                        <div class="placeholding-input">
+                                            <input class="submit" type="submit" value="Submit"/>
+                                        </div>
                                         </a>
                                         <a class="follow-btn" href="#">
                                             <div class="action-text" id="add-time-cancel">
@@ -225,11 +224,11 @@
                                 <td><?php echo sprintf("%02d",($s->end_time/100)).":".sprintf("%02d",($s->end_time%100)); ?></td>
                                 <td>
                                     <?php if ($s->status == 1): ?>
-                                        <a title="title" href="<?php echo base_url(); ?>retweeter/disable_st/<?php echo $s->id; ?>" class="active-account">
+                                        <a title="title" href="<?php echo base_url(); ?>retweeter/disable_st/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>" class="active-account">
                                             Enabled
                                         </a>
                                     <?php else: ?>
-                                        <a title="title" href="<?php echo base_url(); ?>retweeter/enable_st/<?php echo $s->id; ?>" class="inactive-account">
+                                        <a title="title" href="<?php echo base_url(); ?>retweeter/enable_st/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>" class="inactive-account">
                                             Disabled
                                         </a>
                                     <?php endif; ?>
@@ -237,7 +236,7 @@
                                 <td>
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
-                                    <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this item?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_st/<?php echo $s->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
+                                    <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this item?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_st/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
                                 </td>
                             </tr>
                             <?php $i++; ?>

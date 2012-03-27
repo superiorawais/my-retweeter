@@ -48,7 +48,7 @@ class Tweet_model extends CI_Model {
         $this->db->set('retweeter_id',$retweeter_id);
         $this->db->set('tweet_id',$tweet_id);
         $this->db->set('text',$text);
-        $this->db->insert('error_tweet');
+        $this->db->insert('tweet_error');
     }
     
     function check_tweet($retweeter_id,$tweet_id){
@@ -69,12 +69,11 @@ class Tweet_model extends CI_Model {
             $retweeter = $this->get_retweeter_by_id($retweeter_id);
             $tokens = array('oauth_token' => $retweeter->access, 'oauth_token_secret' => $retweeter->access_secret);
             $this->tweet->set_tokens($tokens);
-            $response = null;
-            try {
-                $response = $this->tweet->call('post', "statuses/retweet/{$tweet_id}",array());
-                $this->add_tweet($retweeter_id, $tweet_id,$text);
-            }catch(Exception $e){
+            $response = $this->tweet->call('post', "statuses/retweet/{$tweet_id}",array());
+            if(empty($response)){
                 $this->add_tweet_error($retweeter_id, $tweet_id,$text);
+            }else{
+                $this->add_tweet($retweeter_id, $tweet_id,$text);
             }
             return $response;
         }
@@ -97,8 +96,8 @@ class Tweet_model extends CI_Model {
     }
     
     // TIME //
-    function get_tweet_by_username($username,$last_tweet_id=1){
-        return $this->tweet->search(array('q'=>"from:{$username}",'since_id'=>$last_tweet_id,'result_type'=>'recent'));
+    function get_tweet_by_username($username,$last_tweet_id=1,$count=20){
+        return $this->tweet->search(array('q'=>"from:{$username}",'since_id'=>$last_tweet_id,'result_type'=>'recent','rpp'=>$count));
     }
     
     function get_stnow_by_rt($retweeter_id,$active=false){
@@ -120,7 +119,7 @@ class Tweet_model extends CI_Model {
     function retweet_time($retweeter_id){
         $st = $this->get_stnow_by_rt($retweeter_id,TRUE);
         foreach($st->result() as $source){
-            $result = $this->get_tweet_by_username($source->username, $source->last_tweet_id);
+            $result = $this->get_tweet_by_username($source->username, $source->last_tweet_id,40);
             $tweet = array_reverse($result->results);
             $date = date("Y-m-d");
             $time = $source->start_time;
@@ -133,7 +132,7 @@ class Tweet_model extends CI_Model {
                 if(($date_tweet==$date)&&($time_tweet > $time)){
                     echo '&nbsp&nbsp&nbsp&nbsp'.$t->text."<br/>";
                     $this->_retweet($retweeter_id, $t->id_str,$t->text);
-                    $this->update_st_lt($source->id, $t->id_str);
+                    //$this->update_st_lt($source->id, $t->id_str);
                 }
             }
         }

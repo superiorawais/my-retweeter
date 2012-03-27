@@ -3,6 +3,7 @@
     <div class="content-box"><!-- Start Content Box -->
         <div class="content-box-header">
             <h3>Add Retweeter Account</h3>
+            <h5><a href="<?php echo base_url();?>main/logout">logout</a></h5>
             <div class="clear"></div>
         </div> <!-- End .content-box-header -->
         <div class="content-box-content">
