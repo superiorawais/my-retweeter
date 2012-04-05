@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2012 at 06:22 AM
+-- Generation Time: Apr 05, 2012 at 05:37 PM
 -- Server version: 5.5.8
 -- PHP Version: 5.3.5
 
@@ -35,6 +35,13 @@ CREATE TABLE IF NOT EXISTS `retweeter` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `retweeter`
+--
+
+INSERT INTO `retweeter` (`id`, `username`, `status`, `access`, `access_secret`) VALUES
+(1, 'tes1_myrt', 1, '535698480-RwW23B3PSpiio04UxnIy1KrIrSC1eHwfKJPa0YGm', 'P3faRGrryDBKBWdVcIlMWqVGYCGPeY7NsB6Rp12yRm4');
+
 -- --------------------------------------------------------
 
 --
@@ -50,7 +57,38 @@ CREATE TABLE IF NOT EXISTS `retweeter_tweet` (
   `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tweet_id` (`tweet_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `retweeter_tweet`
+--
+
+INSERT INTO `retweeter_tweet` (`id`, `retweeter_id`, `tweet_id`, `text`, `date`) VALUES
+(1, 1, '187915590629982208', 'mati kau', '2012-04-05 21:52:29'),
+(2, 1, '187915857651961858', 'sok cobain #teseksperimen', '2012-04-05 21:53:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `source_all`
+--
+
+DROP TABLE IF EXISTS `source_all`;
+CREATE TABLE IF NOT EXISTS `source_all` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `retweeter_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `last_tweet_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `source_all`
+--
+
+INSERT INTO `source_all` (`id`, `retweeter_id`, `username`, `status`, `last_tweet_id`) VALUES
+(3, 1, 'tes2_myrt', 1, '187915857651961858');
 
 -- --------------------------------------------------------
 
@@ -68,6 +106,13 @@ CREATE TABLE IF NOT EXISTS `source_hashtag` (
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `source_hashtag`
+--
+
+INSERT INTO `source_hashtag` (`id`, `retweeter_id`, `username`, `hashtag`, `last_tweet_id`, `status`) VALUES
+(1, 1, 'tes2_myrt', '#teseksperimen', '187915857651961858', 1);
 
 -- --------------------------------------------------------
 
@@ -88,6 +133,11 @@ CREATE TABLE IF NOT EXISTS `source_time` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `source_time`
+--
+
+
 -- --------------------------------------------------------
 
 --
@@ -102,3 +152,8 @@ CREATE TABLE IF NOT EXISTS `tweet_error` (
   `text` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tweet_error`
+--
+

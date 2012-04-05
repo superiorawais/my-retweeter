@@ -9,10 +9,6 @@ class Tweet_model extends CI_Model {
         $this->tweet->enable_debug(TRUE);
     }
     
-    function get_user_timeline($screen_name){
-        return $this->tweet->call('get', "statuses/user_timeline",array("screen_name"=>$screen_name));
-    }
-    
     function get_user_timeline_st($screen_name,$last_tweet_id){
         return $this->tweet->call('get', "statuses/user_timeline",array("screen_name"=>$screen_name,"exclude_replies"=>"true","trim_user"=>"true","since_id"=>$last_tweet_id));
     }
@@ -100,6 +96,11 @@ class Tweet_model extends CI_Model {
         return $this->tweet->search(array('q'=>"from:{$username}",'since_id'=>$last_tweet_id,'result_type'=>'recent','rpp'=>$count));
     }
     
+    function get_user_timeline($username,$last_tweet_id=1,$count=20){
+        $response = $this->tweet->call("get", "statuses/user_timeline",array("screen_name"=>$username,"since_id"=>$last_tweet_id,"count"=>$count));
+        return $response;
+    }
+    
     function get_stnow_by_rt($retweeter_id,$active=false){
         date_default_timezone_set("Asia/Jakarta");
         $day = date("N"); 
@@ -138,6 +139,32 @@ class Tweet_model extends CI_Model {
         }
     }
     
+    //ALL
+    function get_sa_by_rt($retweeter_id,$active=false){
+        $this->db->where('retweeter_id',$retweeter_id);
+        if($active){
+            $this->db->where('status',1);
+        }
+        return $this->db->get('source_all');
+    }
+    
+    function retweet_all($retweeter_id){
+        $sa = $this->get_sa_by_rt($retweeter_id, TRUE);
+        foreach($sa->result() as $source){
+            $retweeter = $this->get_retweeter_by_id($retweeter_id);
+            $tokens = array('oauth_token' => $retweeter->access, 'oauth_token_secret' => $retweeter->access_secret);
+            $this->tweet->set_tokens($tokens);
+            $result = $this->get_user_timeline($source->username, $source->last_tweet_id,40);
+            $tweet = array_reverse($result);
+            echo '&nbsp&nbsp'.$source->username.'<br/>';
+            foreach($tweet as $t){
+                echo '&nbsp&nbsp&nbsp&nbsp'.$t->text."<br/>";
+                $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                $this->update_sa_lt($source->id, $t->id_str);
+            }
+        }
+    }
+    
     
     // EXTENSION
     function get_retweeter_by_id($user_id){
@@ -148,5 +175,10 @@ class Tweet_model extends CI_Model {
         $this->db->set('last_tweet_id',$id_tweet);
         $this->db->where('id',$st_id);
         $this->db->update('source_time');
+    }
+    function update_sa_lt($sa_id,$id_tweet){
+        $this->db->set('last_tweet_id',$id_tweet);
+        $this->db->where('id',$sa_id);
+        $this->db->update('source_all');
     }
 }

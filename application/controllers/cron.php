@@ -16,8 +16,8 @@ class Cron extends CI_Controller {
     
     public function index(){
         //redirect('main');
-        $tweet = $this->tweet_model->get_tweet_by_username('detikcom',1,50);
-        foreach($tweet->results as $t){
+        $tweet = $this->tweet_model->get_user_timeline('tes2_myrt');
+        foreach($tweet as $t){
             echo $t->text." =>".date("Y-m-d G:i:s",strtotime($t->created_at))."->".$t->id_str.'<br/>';
         }
     }
@@ -26,7 +26,7 @@ class Cron extends CI_Controller {
         $retweeter = $this->main_model->get_retweeter(TRUE);
         foreach($retweeter->result() as $rt){
             echo $rt->username.'</br>';
-            $hashtag = $this->main_model->get_hashtag_by_rt($rt->id);
+            $hashtag = $this->main_model->get_hashtag_by_rt($rt->id,TRUE);
             foreach($hashtag->result() as $ht){
                 echo '&nbsp&nbsp'.$ht->username.'<br/>';
                 $this->tweet_model->retweet($ht->id);
@@ -44,7 +44,17 @@ class Cron extends CI_Controller {
         }
     }
     
+    public function retweet_all(){
+        $retweeter = $this->main_model->get_retweeter(TRUE);
+        foreach($retweeter->result() as $rt){
+            echo $rt->username.'</br>';
+            $this->tweet_model->retweet_all($rt->id);
+            echo '<hr/>';
+        }
+    }
+    
     public function retweet(){
+        $this->retweet_all();
         $this->retweet_time();
         $this->retweet_hashtag();
     }

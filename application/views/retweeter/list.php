@@ -69,7 +69,7 @@
                                     <?php endif;?>
                                 </td>
                                 <td style="text-align:center">
-                                    <a id="manage-retweeter" title="Manage Source Account" href="<?php echo base_url();?>retweeter/hashtag/<?php echo $account->id;?>"><img alt="Manage Source Account" src="<?php echo base_url(); ?>script/images/hammer_screwdriver.png" /></a>
+                                    <a id="manage-retweeter" title="Manage Source Account" href="<?php echo base_url();?>retweeter/source/<?php echo $account->id;?>"><img alt="Manage Source Account" src="<?php echo base_url(); ?>script/images/hammer_screwdriver.png" /></a>
                                 </td>
                                 <td style="text-align:center">
                                     <!-- Icons -->

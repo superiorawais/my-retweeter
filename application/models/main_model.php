@@ -179,4 +179,50 @@ class Main_model extends CI_Model {
         $this->db->where('id',$st_id);
         $this->db->delete('source_time');
     }
+    
+    // SOURCE USER
+    function get_sa_by_rt($retweeter_id,$active=false){
+        $this->db->where('retweeter_id',$retweeter_id);
+        if($active){
+            $this->db->where('status',1);
+        }
+        return $this->db->get('source_all');
+    }
+    function check_all_username($username){
+        $this->db->where('username',$username);
+        $result = $this->db->get('source_all');
+        if($result->num_rows()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    function insert_all($input){
+        $this->db->set('username',$input['username']);
+        $this->db->set('retweeter_id',$input['retweeter_id']);
+        $this->db->set('status',1,TRUE);
+        $this->db->set('last_tweet_id','1');
+        $this->db->insert('source_all');
+        $id = $this->db->insert_id();
+        $this->update_all_last_tweet($id,$input['username']);
+    }
+    function update_all_last_tweet($id_all,$username){
+        $this->load->model('tweet_model');
+        $tweet = $this->tweet_model->get_user_timeline($username,1,2);
+        if(count($tweet) > 0){
+            $id = $tweet[0]->id_str;
+            $this->db->set('last_tweet_id',$id);
+            $this->db->where('id',$id_all);
+            $this->db->update('source_all');
+        }
+    }
+    function set_sa_status($sa_id,$status){
+        $this->db->set('status',$status,TRUE);
+        $this->db->where('id',$sa_id);
+        $this->db->update('source_all');
+    }
+    function delete_sa($sa_id){
+        $this->db->where('id',$sa_id);
+        $this->db->delete('source_all');
+    }
 }
