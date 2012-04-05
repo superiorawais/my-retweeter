@@ -34,6 +34,18 @@ $(document).ready(function(){
            $("#add-time-trigger").fadeIn(); 
         });
     });
+    
+    /* SOURCE ALL */
+    $("#add-all-button").click(function(){
+        $("#add-all-trigger").fadeOut(function(){
+           $("#add-all").fadeIn(); 
+        });
+    });
+    $("#add-all-cancel").click(function(){
+        $("#add-all").fadeOut(function(){
+           $("#add-all-trigger").fadeIn(); 
+        });
+    });
 });
 
 function input_change(obj){

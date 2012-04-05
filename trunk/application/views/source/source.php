@@ -38,6 +38,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="source-caption">
+                    <h3>Retweet By Hashtag</h3>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -124,7 +127,10 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <div class="blank" style="height: 40px;"></div>
+                <div class="blank" style="height: 40px;border-bottom: 1px solid #CCCCCC;"></div>
+                <div class="source-caption">
+                    <h3>Retweet By Time</h3>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -237,6 +243,81 @@
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
                                     <a id="delete-hashtag" onclick="return confirm('Are you sure want to DELETE this item?');" title="Delete Hashtag" href="<?php echo base_url(); ?>retweeter/delete_st/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="blank" style="height: 40px;border-bottom: 1px solid #CCCCCC;"></div>
+                <div class="source-caption">
+                    <h3>Retweet By Account</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="th-no">No</th>
+                            <th>Account</th>
+                            <th>Status</th>
+                            <th style="text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <div class="add" id="add-all-trigger">
+                                    <a class="follow-btn" href="#">
+                                        <div class="action-text" id="add-all-button">
+                                            Add New Source
+                                        </div>
+                                    </a>
+                                    <a class="follow-btn" href="<?php echo base_url();?>retweeter">
+                                        <div class="action-text">
+                                            Back To Retweeter
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="add-all" class="add">
+                                    <form action="<?php echo base_url();?>retweeter/all_submit/<?php echo $retweeter->id;?>" method="post">
+                                        <div class="placeholding-input">
+                                            <input type="text" maxlength="255" name="username" autocomplete="off" class="text-input" oninput="input_change(this)"/>
+                                            <span class="placeholder">@username</span>
+                                        </div>
+                                        <div class="placeholding-input">
+                                            <input class="submit" type="submit" value="Submit"/>
+                                        </div>
+                                        </a>
+                                        <a class="follow-btn" href="#">
+                                            <div class="action-text" id="add-all-cancel">
+                                                Cancel
+                                            </div>
+                                        </a>
+                                    </form>
+                                </div>
+                                <div class="clear"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <?php foreach ($sa->result() as $s): ?>
+                            <tr <?php echo(($i % 2) == 0) ? 'class="alt-row"' : ''; ?>>
+                                <td class="td-no"><?php echo $i + 1; ?></td>
+                                <td class="td-no"><?php echo $s->username;?></td>
+                                <td>
+                                    <?php if ($s->status == 1): ?>
+                                        <a title="title" href="<?php echo base_url(); ?>retweeter/disable_sa/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>" class="active-account">
+                                            Enabled
+                                        </a>
+                                    <?php else: ?>
+                                        <a title="title" href="<?php echo base_url(); ?>retweeter/enable_sa/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>" class="inactive-account">
+                                            Disabled
+                                        </a>
+                                    <?php endif; ?>
+                                </td>
+                                <td style="text-align:center">
+                                    <!-- Icons -->
+                                    <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
+                                    <a id="delete-all" onclick="return confirm('Are you sure want to DELETE this item?');" title="Delete Source" href="<?php echo base_url(); ?>retweeter/delete_sa/<?php echo $retweeter_id; ?>/<?php echo $s->id; ?>"><img alt="Delete Hashtag" src="<?php echo base_url(); ?>script/images/cross.png" /></a> 
                                 </td>
                             </tr>
                             <?php $i++; ?>
