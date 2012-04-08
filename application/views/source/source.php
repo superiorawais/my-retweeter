@@ -299,6 +299,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        <?php $i=0;?>
                         <?php foreach ($sa->result() as $s): ?>
                             <tr <?php echo(($i % 2) == 0) ? 'class="alt-row"' : ''; ?>>
                                 <td class="td-no"><?php echo $i + 1; ?></td>
