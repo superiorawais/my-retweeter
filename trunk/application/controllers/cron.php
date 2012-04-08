@@ -54,9 +54,20 @@ class Cron extends CI_Controller {
     }
     
     public function retweet(){
-        $this->retweet_all();
-        $this->retweet_time();
-        $this->retweet_hashtag();
+        $retweeter = $this->main_model->get_retweeter(TRUE);
+        foreach($retweeter->result() as $rt){
+            echo $rt->username.'</br>';
+            //all
+            $this->tweet_model->retweet_combine($rt->id);
+            echo '<hr/>';
+            //hashtag
+            $hashtag = $this->main_model->get_hashtag_by_rt($rt->id,TRUE);
+            foreach($hashtag->result() as $ht){
+                echo '&nbsp&nbsp'.$ht->username.'<br/>';
+                $this->tweet_model->retweet($ht->id);
+            }
+            echo '<hr/>';
+        }
     }
 }
 ?>

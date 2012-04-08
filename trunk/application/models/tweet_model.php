@@ -165,6 +165,45 @@ class Tweet_model extends CI_Model {
         }
     }
     
+    //ALL COBINE WITH TIME
+    function retweet_combine($retweeter_id){
+        $retweeter = $this->get_retweeter_by_id($retweeter_id);
+        $tokens = array('oauth_token' => $retweeter->access, 'oauth_token_secret' => $retweeter->access_secret);
+        $this->tweet->set_tokens($tokens);
+        //ALL
+        $sa = $this->get_sa_by_rt($retweeter_id, TRUE);
+        foreach($sa->result() as $source){
+            $result = $this->get_user_timeline($source->username, $source->last_tweet_id,40);
+            $tweet = array_reverse($result);
+            echo '&nbsp&nbsp'.$source->username.'<br/>';
+            foreach($tweet as $t){
+                echo '&nbsp&nbsp&nbsp&nbsp'.$t->text."<br/>";
+                $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                $this->update_sa_lt($source->id, $t->id_str);
+            }
+        }
+        echo "<hr/>";
+        //TIME
+        $st = $this->get_stnow_by_rt($retweeter_id,TRUE);
+        foreach($st->result() as $source){
+            $result = $this->get_user_timeline($source->username, $source->last_tweet_id,40);
+            $tweet = array_reverse($result);
+            $date = date("Y-m-d");
+            $time = $source->start_time;
+            echo '&nbsp&nbsp'.$source->username.'<br/>';
+            foreach($tweet as $t){
+                $date_tweet = date("Y-m-d", strtotime($t->created_at));
+                $hour_tweet = date("G", strtotime($t->created_at));
+                $minute_tweet = date("i", strtotime($t->created_at));
+                $time_tweet = intval($hour_tweet . $minute_tweet);
+                if(($date_tweet==$date)&&($time_tweet > $time)){
+                    echo '&nbsp&nbsp&nbsp&nbsp'.$t->text."<br/>";
+                    $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                    $this->update_st_lt($source->id, $t->id_str);
+                }
+            }
+        }
+    }
     
     // EXTENSION
     function get_retweeter_by_id($user_id){
