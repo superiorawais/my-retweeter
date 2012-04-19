@@ -114,7 +114,7 @@ class Retweeter extends CI_Controller {
     public function hashtag_submit($user_id){
         $username = $this->input->post('username');
         $username = str_replace("@", "", $username);
-        if($this->main_model->check_hashtag_username($username)){
+        if($this->main_model->check_hashtag_username($username,$user_id)){
             $this->session->set_flashdata('sn_add','error');
             $this->session->set_flashdata('sn_add_content','Twitter account is already exists in database');
         }else{

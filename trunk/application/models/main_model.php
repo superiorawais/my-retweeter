@@ -91,8 +91,9 @@ class Main_model extends CI_Model {
         $this->db->where('id',$ht_id);
         return $this->db->get('source_hashtag')->first_row();
     }
-    function check_hashtag_username($username){
+    function check_hashtag_username($username,$retweeter_id){
         $this->db->where('username',$username);
+        $this->db->where('retweeter_id',$retweeter_id);
         $result = $this->db->get('source_hashtag');
         if($result->num_rows()>0){
             return true;
