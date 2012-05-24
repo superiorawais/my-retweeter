@@ -75,6 +75,24 @@ class Tweet_model extends CI_Model {
         }
     }
     
+    function _retweet_uber($retweeter_id,$tweet_id,$username,$text=null){
+        if($this->check_tweet($retweeter_id, $tweet_id)){
+            return null;
+        }else{
+            $retweeter = $this->get_retweeter_by_id($retweeter_id);
+            $tokens = array('oauth_token' => $retweeter->access, 'oauth_token_secret' => $retweeter->access_secret);
+            $this->tweet->set_tokens($tokens);
+            $tweet_text = "RT @".$username.": ".$text;
+            $response = $this->tweet->call('post', "statuses/update",array("status"=>$tweet_text));
+            if(empty($response)){
+                $this->add_tweet_error($retweeter_id, $tweet_id,$text);
+            }else{
+                $this->add_tweet($retweeter_id, $tweet_id,$text);
+            }
+            return $response;
+        }
+    }
+    
     function retweet($ht_id){
         $this->load->model('main_model');
         $tweet = $this->get_tweet_hashtag($ht_id);
@@ -178,7 +196,11 @@ class Tweet_model extends CI_Model {
             echo '&nbsp&nbsp'.$source->username.'<br/>';
             foreach($tweet as $t){
                 echo '&nbsp&nbsp&nbsp&nbsp'.$t->text."<br/>";
-                $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                if($source->rt_type == 1){
+                    $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                }else{
+                    $this->_retweet_uber($retweeter_id, $t->id_str,$source->username,$t->text);
+                }
                 $this->update_sa_lt($source->id, $t->id_str);
             }
         }
@@ -198,7 +220,11 @@ class Tweet_model extends CI_Model {
                 $time_tweet = intval($hour_tweet . $minute_tweet);
                 if(($date_tweet==$date)&&($time_tweet > $time)){
                     echo '&nbsp&nbsp&nbsp&nbsp'.$t->text."<br/>";
-                    $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                    if ($source->rt_type == 1) {
+                        $this->_retweet($retweeter_id, $t->id_str,$t->text);
+                    } else {
+                        $this->_retweet_uber($retweeter_id, $t->id_str, $source->username,$t->text);
+                    }
                     $this->update_st_lt($source->id, $t->id_str);
                 }
             }

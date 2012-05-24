@@ -48,6 +48,7 @@
                             <th>Account</th>
                             <th>Hashtag</th>
                             <th>Status</th>
+                            <th>Retweet Type</th>
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
@@ -75,6 +76,12 @@
                                         <div class="placeholding-input">
                                             <input type="text" maxlength="255" name="hashtag" autocomplete="off" class="text-input" oninput="input_change(this)"/>
                                             <span class="placeholder">#hashtag,#hashtag</span>
+                                        </div>
+                                        <div class="placeholding-input">
+                                            <select class="text-select" name="rttype">
+                                                <option value="1">Original</option>
+                                                <option value="2">Uber RT</option>
+                                            </select>
                                         </div>
                                         <div class="placeholding-input">
                                             <input class="submit" type="submit" value="Submit"/>
@@ -117,6 +124,13 @@
                                         </a>
                                     <?php endif; ?>
                                 </td>
+                                <td>
+                                    <?php if($h->rt_type == 1):?>
+                                    Original Twitter
+                                    <?php else:?>
+                                    Uber RT
+                                    <?php endif;?>
+                                </td>
                                 <td style="text-align:center">
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
@@ -140,6 +154,7 @@
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Status</th>
+                            <th>Retweet Type</th>
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
@@ -163,6 +178,12 @@
                                         <div class="placeholding-input">
                                             <input type="text" maxlength="255" name="username" autocomplete="off" class="text-input" oninput="input_change(this)"/>
                                             <span class="placeholder">@username</span>
+                                        </div>
+                                        <div class="placeholding-input">
+                                            <select class="text-select" name="rttype">
+                                                <option value="1">Original</option>
+                                                <option value="2">Uber RT</option>
+                                            </select>
                                         </div>
                                         <div class="placeholding-input">
                                             <select name="day">
@@ -239,6 +260,13 @@
                                         </a>
                                     <?php endif; ?>
                                 </td>
+                                <td>
+                                    <?php if($s->rt_type == 1):?>
+                                    Original Twitter
+                                    <?php else:?>
+                                    Uber RT
+                                    <?php endif;?>
+                                </td>
                                 <td style="text-align:center">
                                     <!-- Icons -->
                                     <!-- <a title="Edit Account" href="#"><img alt="Edit Account" src="<?php echo base_url(); ?>script/images/pencil.png" /></a> -->
@@ -259,6 +287,7 @@
                             <th class="th-no">No</th>
                             <th>Account</th>
                             <th>Status</th>
+                            <th>Retweet Type</th>
                             <th style="text-align:center">Action</th>
                         </tr>
                     </thead>
@@ -282,6 +311,12 @@
                                         <div class="placeholding-input">
                                             <input type="text" maxlength="255" name="username" autocomplete="off" class="text-input" oninput="input_change(this)"/>
                                             <span class="placeholder">@username</span>
+                                        </div>
+                                        <div class="placeholding-input">
+                                            <select class="text-select" name="rttype">
+                                                <option value="1">Original</option>
+                                                <option value="2">Uber RT</option>
+                                            </select>
                                         </div>
                                         <div class="placeholding-input">
                                             <input class="submit" type="submit" value="Submit"/>
@@ -314,6 +349,13 @@
                                             Disabled
                                         </a>
                                     <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if($s->rt_type == 1):?>
+                                    Original Twitter
+                                    <?php else:?>
+                                    Uber RT
+                                    <?php endif;?>
                                 </td>
                                 <td style="text-align:center">
                                     <!-- Icons -->
