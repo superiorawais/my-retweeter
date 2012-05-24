@@ -107,6 +107,7 @@ class Main_model extends CI_Model {
         $this->db->set('hashtag',$input['hashtag']);
         $this->db->set('status',1,TRUE);
         $this->db->set('last_tweet_id','1');
+        $this->db->set('rt_type',$input['rt_type'],TRUE);
         $this->db->insert('source_hashtag');
         $id = $this->db->insert_id();
         $this->update_ht_last_tweet($id);
@@ -152,6 +153,7 @@ class Main_model extends CI_Model {
         $this->db->set('end_time',$input['end_time'],TRUE);
         $this->db->set('status',1,TRUE);
         $this->db->set('last_tweet_id',1,TRUE);
+        $this->db->set('rt_type',$input['rt_type'],TRUE);
         $this->db->insert('source_time');
         $id_st = $this->db->insert_id();
         $this->update_st_last_tweet($id_st, $input['username']);
@@ -203,6 +205,7 @@ class Main_model extends CI_Model {
         $this->db->set('retweeter_id',$input['retweeter_id']);
         $this->db->set('status',1,TRUE);
         $this->db->set('last_tweet_id','1');
+        $this->db->set('rt_type',$input['rt_type'],TRUE);
         $this->db->insert('source_all');
         $id = $this->db->insert_id();
         $this->update_all_last_tweet($id,$input['username']);

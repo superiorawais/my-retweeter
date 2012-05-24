@@ -112,12 +112,14 @@ class Retweeter extends CI_Controller {
     }
     
     public function hashtag_submit($user_id){
+        $rt_type = $this->input->post('rttype');
         $username = $this->input->post('username');
         $username = str_replace("@", "", $username);
         if($this->main_model->check_hashtag_username($username,$user_id)){
             $this->session->set_flashdata('sn_add','error');
             $this->session->set_flashdata('sn_add_content','Twitter account is already exists in database');
         }else{
+            $input['rt_type'] = $rt_type;
             $input['username'] = $username;
             $input['hashtag'] = $this->input->post('hashtag');
             $input['retweeter_id'] = $user_id;
@@ -128,8 +130,10 @@ class Retweeter extends CI_Controller {
         redirect('retweeter/source/'.$user_id);
     }
     public function time_submit($user_id){
+        $rt_type = $this->input->post('rttype');
         $username = $this->input->post('username');
         $username = str_replace("@", "", $username);
+        $input['rt_type'] = $rt_type;
         $input['username'] = $username;
         $input['retweeter_id'] = $user_id;
         $input['day'] = $this->input->post('day');
@@ -161,12 +165,14 @@ class Retweeter extends CI_Controller {
         redirect('retweeter/source/'.$user_id);
     }
     public function all_submit($user_id){
+        $rt_type = $this->input->post('rttype');
         $username = $this->input->post('username');
         $username = str_replace("@", "", $username);
         if($this->main_model->check_all_username($username)){
             $this->session->set_flashdata('sn_add','error');
             $this->session->set_flashdata('sn_add_content','Twitter account is already exists in database');
         }else{
+            $input['rt_type'] = $rt_type;
             $input['username'] = $username;
             $input['retweeter_id'] = $user_id;
             $this->main_model->insert_all($input);
