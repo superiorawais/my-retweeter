@@ -83,6 +83,9 @@ class Tweet_model extends CI_Model {
             $tokens = array('oauth_token' => $retweeter->access, 'oauth_token_secret' => $retweeter->access_secret);
             $this->tweet->set_tokens($tokens);
             $tweet_text = "RT @".$username.": ".$text;
+            if(strlen($tweet_text) > 140){
+                $tweet_text = substr($tweet_text, 0, 140);
+            }
             $response = $this->tweet->call('post', "statuses/update",array("status"=>$tweet_text));
             if(empty($response)){
                 $this->add_tweet_error($retweeter_id, $tweet_id,$text);
